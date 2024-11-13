@@ -1,4 +1,4 @@
-﻿namespace Courses
+﻿namespace Courses.models
 {
     public enum EDayOfWeek
     {
