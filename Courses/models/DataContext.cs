@@ -1,6 +1,6 @@
 ﻿namespace Courses.models
 {
-    public class DataContext
+    public class DataContext : IDataContext
     {
         public List<Course> courses { get; set; }
         public List<Student> students { get; set; }

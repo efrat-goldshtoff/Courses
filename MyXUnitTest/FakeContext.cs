@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Courses;
 using Courses.models;
 
 namespace MyXUnitTest
 {
-    internal class FakeContext
+    internal class FakeContext : IDataContext
     {
         public List<Course> courses { get; set; }
         public List<Student> students { get; set; }

@@ -8,8 +8,12 @@ namespace Courses.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class StudentsController : ControllerBase
-    {
-        private readonly DataContext _context = new DataContext();
+    {     
+        private readonly IDataContext _context;
+        public StudentsController(IDataContext context)
+        {
+            _context = context;
+        }
         // GET: api/<StudentsController>
         [HttpGet]
         public List<Student> Get()

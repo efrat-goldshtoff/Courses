@@ -8,8 +8,12 @@ namespace Courses.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class GuiderController : ControllerBase
-    {
-        private readonly DataContext _context = new DataContext();
+    {     
+        private readonly IDataContext _context;
+        public GuiderController(IDataContext context)
+        {
+            _context = context;
+        }
         // GET: api/<GuiderController>
         [HttpGet]
         public List<Guide> Get()

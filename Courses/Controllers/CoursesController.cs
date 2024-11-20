@@ -9,7 +9,11 @@ namespace Courses.Controllers
     [ApiController]
     public class CoursesController : ControllerBase
     {
-        private readonly DataContext _context = new DataContext();
+        private readonly IDataContext _context;
+        public CoursesController(IDataContext context)
+        {
+            _context = context;
+        }
         // GET: api/<CoursesController>
         [HttpGet]
         public List<Course> Get()
@@ -43,7 +47,7 @@ namespace Courses.Controllers
                     return;
                 }
             }
-        } 
+        }
         [HttpPut]
         public void Put(int id)
         {
