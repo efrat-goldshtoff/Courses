@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Courses.Core.models;
 
-namespace Courses.Core.Repositories
+namespace Courses.Core.Services
 {
-    public interface IStudentRepository
+    public interface IStudentService
     {
         public List<Student> GetList();
         public Student GetById(int id);

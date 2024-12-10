@@ -1,5 +1,5 @@
-using Courses;
-using Courses.models;
+using Courses.Core;
+using Courses.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

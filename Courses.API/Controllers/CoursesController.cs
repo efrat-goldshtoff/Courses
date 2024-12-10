@@ -1,5 +1,6 @@
 ﻿using Courses.Core;
 using Courses.Core.models;
+using Courses.Core.Services;
 using Courses.Service;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,50 +12,45 @@ namespace Courses.API.Controllers
     [ApiController]
     public class CoursesController : ControllerBase
     {
-        private readonly CourseService _context;
-        //private readonly IDataContext _context;
-        public CoursesController(CourseService context)
+        private readonly ICoursesService _context;
+        public CoursesController(ICoursesService context)
         {
             _context = context;
         }
         // GET: api/<CoursesController>
         [HttpGet]
-        public IEnumerable<Course> Get()
+        public ActionResult Get()
         {
-            return _context.GetAll();
+            var courses = _context.GetList();
+            return Ok(courses);
         }
 
         // GET api/<CoursesController>/5
         [HttpGet("{id}")]
-        public Course Get(int id)
+        public ActionResult Get(int id)
         {
-            return _context.courses.FirstOrDefault(f => f.Id == id);
+            var courses = _context.GetById(id);
+            return Ok(courses);
         }
 
         // POST api/<CoursesController>
         [HttpPost]
         public void Post([FromBody] Course value)
         {
-            _context.courses.Add(value);
+            _context.Add(value);
         }
 
         // PUT api/<CoursesController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put(int id, [FromBody] Course value)
         {
-            foreach (Course item in _context.courses)
-            {
-                if (item.Id == id)
-                {
-                    item.Subject = value;
-                    return;
-                }
-            }
+            _context.Update(id, value);
+
         }
         [HttpPut]
-        public void Put(int id)
+        public void Put(int id,bool status)
         {
-
+            _context.UpdateStatus(id, status);
         }
 
         // DELETE api/<CoursesController>/5

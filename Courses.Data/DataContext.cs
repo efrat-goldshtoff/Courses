@@ -1,4 +1,5 @@
 ﻿using Courses.Core;
+using Courses.Core.models;
 
 namespace Courses.Data
 {

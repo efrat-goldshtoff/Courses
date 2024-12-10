@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Courses.Core.models;
 
-namespace Courses.Core.Repositories
+namespace Courses.Core.Services
 {
-    public interface IGuideRepository
+    public interface IGuideService
     {
         public List<Guide> GetList();
-        public Guide GetById(int id);
+        public Guide? GetById(int id);
         public void Add(Guide guide);
         public void Update(int id, Guide guide);
         public void UpdateStatus(int id, bool status);

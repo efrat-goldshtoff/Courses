@@ -1,4 +1,5 @@
-﻿using Courses.models;
+﻿
+using Courses.Core.models;
 
 namespace Courses
 {
