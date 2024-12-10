@@ -22,8 +22,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Courses\Courses.csproj" />
-  </ItemGroup>
-
 </Project>

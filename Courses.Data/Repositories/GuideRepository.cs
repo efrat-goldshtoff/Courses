@@ -17,7 +17,7 @@ namespace Courses.Data.Repositories
         }
         public List<Guide> GetList()
         {
-            return _context.guiders;
+            return _context.guiders.ToList();
         }
 
         public Guide GetById(int id)

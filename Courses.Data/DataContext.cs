@@ -1,19 +1,24 @@
-﻿using Courses.Core;
-using Courses.Core.models;
+﻿using Courses.Core.models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Courses.Data
 {
-    public class DataContext : IDataContext
+    public class DataContext : DbContext
     {
-        public List<Course> courses { get; set; }
-        public List<Student> students { get; set; }
-        public List<Guide> guiders { get; set; }
+        public DbSet<Course> courses { get; set; }
+        public DbSet<Student> students { get; set; }
+        public DbSet<Guide> guiders { get; set; }
 
-        public DataContext()
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            courses = new List<Course>();
-            students = new List<Student> { new Student() { Id = 1, Name = "chani", CodeCourse = 4 } };
-            guiders = new List<Guide>();
+            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=my_db");
         }
+
+        //public DataContext()
+        //{
+        //    courses = new List<Course>();
+        //    students = new List<Student> { new Student() { Id = 1, Name = "chani", CodeCourse = 4 } };
+        //    guiders = new List<Guide>();
+        //}
     }
 }

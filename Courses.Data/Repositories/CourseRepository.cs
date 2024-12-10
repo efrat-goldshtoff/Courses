@@ -17,7 +17,7 @@ namespace Courses.Data.Repositories
         }
         public List<Course> GetList()
         {
-            return _context.courses;
+            return _context.courses.ToList();
         }
 
         public Course GetById(int id)

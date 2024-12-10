@@ -17,7 +17,7 @@ namespace Courses.Data.Repositories
         }
         public List<Student> GetList()
         {
-            return _context.students;
+            return _context.students.ToList();
         }
 
         public Student GetById(int id)
