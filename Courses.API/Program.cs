@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Courses.Core;
 using Courses.Core.Repositories;
 using Courses.Core.Services;
@@ -23,6 +24,17 @@ builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 
 builder.Services.AddDbContext<DataContext>();
 //builder.Services.AddSingleton<DataContext>();
+
+
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    options.JsonSerializerOptions.WriteIndented = true;
+});
+
+//builder.Services.AddSingleton<Mapping>();
+
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 var app = builder.Build();
 

@@ -3,6 +3,7 @@ using Courses.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Courses.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20241222134914_ChangeToList")]
+    partial class ChangeToList
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,13 +112,11 @@ namespace Courses.Data.Migrations
 
             modelBuilder.Entity("Courses.Core.models.Course", b =>
                 {
-                    b.HasOne("Courses.Core.models.Guide", "guide")
+                    b.HasOne("Courses.Core.models.Guide", null)
                         .WithMany("Courses")
                         .HasForeignKey("GuideId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("guide");
                 });
 
             modelBuilder.Entity("CourseStudent", b =>

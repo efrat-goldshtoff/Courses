@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Courses.Core.models;
 using Courses.Core.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace Courses.Data.Repositories
 {
@@ -15,26 +16,30 @@ namespace Courses.Data.Repositories
         {
             _context = context;
         }
-        public List<Student> GetList()
+        public IEnumerable<Student> GetList()
         {
-            return _context.students.ToList();
+            return _context.students.Include(s => s.Courses);
         }
 
         public Student GetById(int id)
         {
-            foreach (var stud in _context.students)
-            {
-                if (stud.Id == id)
-                {
-                    return stud;
-                }
-            }
-            return null;
+            return _context.students.First(s => s.Id == id);
+
+            //foreach (var stud in _context.students)
+            //{
+            //    if (stud.Id == id)
+            //    {
+            //        return stud;
+            //    }
+            //}
+            //return new Student();
         }
 
-        public void Add(Student stud)
+        public Student Add(Student stud)
         {
             _context.students.Add(stud);
+            _context.SaveChanges();
+            return stud;
         }
 
         public void Update(int id, Student stud)
@@ -46,8 +51,13 @@ namespace Courses.Data.Repositories
             {
                 s.Name = stud.Name;
                 s.IsActive = stud.IsActive;
-                s.CodeCourse = stud.CodeCourse;
+                s.Courses = new List<Course>();
+                foreach (Course course in stud.Courses)
+                {
+                    s.Courses.Add(course);
+                }
             }
+            _context.SaveChanges();
         }
 
         public void UpdateStatus(int id, bool status)
@@ -55,8 +65,8 @@ namespace Courses.Data.Repositories
             Student s = GetById(id);
             if (s != null)
                 s.IsActive = status;
+            _context.SaveChanges();
         }
-
 
     }
 }

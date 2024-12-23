@@ -9,9 +9,9 @@ namespace Courses.Core.Repositories
 {
     public interface ICourseRepository
     {
-        public List<Course> GetList();
+        public IEnumerable<Course> GetList();
         public Course GetById(int id);
-        public void Add(Course course);
+        public Course Add(Course course);
         public void Update(int id, Course course);
         public void UpdateStatus(int id, bool status);
     }

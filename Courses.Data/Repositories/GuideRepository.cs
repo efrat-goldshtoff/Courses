@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Courses.Core.models;
 using Courses.Core.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace Courses.Data.Repositories
 {
@@ -15,26 +16,29 @@ namespace Courses.Data.Repositories
         {
             _context = context;
         }
-        public List<Guide> GetList()
+        public IEnumerable<Guide> GetList()
         {
-            return _context.guiders.ToList();
+            return _context.guiders.Include(g => g.Courses);
         }
 
         public Guide GetById(int id)
         {
-            foreach (var guide in _context.guiders)
-            {
-                if (guide.Id == id)
-                {
-                    return guide;
-                }
-            }
-            return null;
+            return _context.guiders.First(g => g.Id == id);
+            //foreach (var guide in _context.guiders)
+            //{
+            //    if (guide.Id == id)
+            //    {
+            //        return guide;
+            //    }
+            //}
+            //return new Guide();
         }
 
-        public void Add(Guide guide)
+        public Guide Add(Guide guide)
         {
             _context.guiders.Add(guide);
+            _context.SaveChanges();
+            return guide;
         }
 
         public void Update(int id, Guide guide)
@@ -47,6 +51,7 @@ namespace Courses.Data.Repositories
                 g.Name = guide.Name;
                 g.IsActive = guide.IsActive;
             }
+            _context.SaveChanges();
         }
 
         public void UpdateStatus(int id, bool status)
@@ -54,6 +59,7 @@ namespace Courses.Data.Repositories
             Guide g = GetById(id);
             if (g != null)
                 g.IsActive = status;
+            _context.SaveChanges();
         }
     }
 }

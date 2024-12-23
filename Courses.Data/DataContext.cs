@@ -1,4 +1,5 @@
-﻿using Courses.Core.models;
+﻿using System.Diagnostics;
+using Courses.Core.models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Courses.Data
@@ -12,6 +13,7 @@ namespace Courses.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=my_db");
+            optionsBuilder.LogTo(msg => Console.WriteLine(msg));
         }
 
         //public DataContext()

@@ -9,7 +9,7 @@ namespace Courses.Core.Services
 {
     public interface IStudentService
     {
-        public List<Student> GetList();
+        public IEnumerable<Student> GetList();
         public Student GetById(int id);
         public void Add(Student student);
         public void Update(int id, Student student);

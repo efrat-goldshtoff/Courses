@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Courses.Core.models;
 using Courses.Core.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace Courses.Data.Repositories
 {
@@ -15,26 +16,29 @@ namespace Courses.Data.Repositories
         {
             _context = context;
         }
-        public List<Course> GetList()
+        public IEnumerable<Course> GetList()
         {
-            return _context.courses.ToList();
+            return _context.courses.Include(c=>c.guide);
         }
 
         public Course GetById(int id)
         {
-            foreach (var course in _context.courses)
-            {
-                if (course.Id == id)
-                {
-                    return course;
-                }
-            }
-            return null;
+            return _context.courses.Include(c=>c.guide).First(c=>c.Id== id);
+            //foreach (var course in _context.courses)
+            //{
+            //    if (course.Id == id)
+            //    {
+            //        return course;
+            //    }
+            //}
+            //return new Course();
         }
 
-        public void Add(Course course)
+        public Course Add(Course course)
         {
             _context.courses.Add(course);
+            _context.SaveChanges();
+            return course;
         }
 
         public void Update(int id, Course course)
@@ -46,10 +50,18 @@ namespace Courses.Data.Repositories
             {
                 c.Subject = course.Subject;
                 c.Day = course.Day;
-                c.GuideId = course.GuideId;
+                c.guide = new Guide();
+                c.guide.Id = course.guide.Id;
+                c.guide.Name= course.guide.Name;
+                c.guide.Courses = new List<Course>();
+                foreach (Course item in course.guide.Courses)
+                {
+                    c.guide.Courses.Add(item);
+                }
                 c.MaxCount = course.MaxCount;
                 c.CurrentCount = course.CurrentCount;
             }
+            _context.SaveChanges();
         }
 
         public void UpdateStatus(int id, bool status)
@@ -57,6 +69,7 @@ namespace Courses.Data.Repositories
             Course c = GetById(id);
             if (c != null)
                 c.Status = status;
+            _context.SaveChanges();
         }
     }
 }

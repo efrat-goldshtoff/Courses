@@ -9,9 +9,9 @@ namespace Courses.Core.Repositories
 {
     public interface IGuideRepository
     {
-        public List<Guide> GetList();
+        public IEnumerable<Guide> GetList();
         public Guide GetById(int id);
-        public void Add(Guide guide);
+        public Guide Add(Guide guide);
         public void Update(int id, Guide guide);
         public void UpdateStatus(int id, bool status);
     }

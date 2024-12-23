@@ -19,7 +19,7 @@ namespace Courses.Service
 
 
 
-        public List<Student> GetList()
+        public IEnumerable<Student> GetList()
         {
             return _courseRepository.GetList();
         }

@@ -3,6 +3,7 @@ using Courses.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Courses.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20241222143314_ChangeIdToObject")]
+    partial class ChangeIdToObject
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,9 +37,6 @@ namespace Courses.Data.Migrations
                     b.Property<int>("Day")
                         .HasColumnType("int");
 
-                    b.Property<int>("GuideId")
-                        .HasColumnType("int");
-
                     b.Property<int>("MaxCount")
                         .HasColumnType("int");
 
@@ -48,9 +47,12 @@ namespace Courses.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("guideId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("GuideId");
+                    b.HasIndex("guideId");
 
                     b.ToTable("courses");
                 });
@@ -112,7 +114,7 @@ namespace Courses.Data.Migrations
                 {
                     b.HasOne("Courses.Core.models.Guide", "guide")
                         .WithMany("Courses")
-                        .HasForeignKey("GuideId")
+                        .HasForeignKey("guideId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

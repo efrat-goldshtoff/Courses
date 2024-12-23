@@ -17,7 +17,7 @@ namespace Courses.Service
             _courseRepository = courseRepository;
         }
 
-        public List<Guide> GetList()
+        public IEnumerable<Guide> GetList()
         {
             return _courseRepository.GetList();
         }
